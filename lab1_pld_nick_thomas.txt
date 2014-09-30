@@ -1,0 +1,11 @@
+Nick Thomas
+Programming Language Design
+Lab1, Sept 30, 2014
+
+Output from #4:
+
+	int
+	main
+	int main() {
+	Error: column 8 Illegal character (
+

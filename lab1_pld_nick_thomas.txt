@@ -2,6 +2,11 @@ Nick Thomas
 Programming Language Design
 Lab1, Sept 30, 2014
 
+# Hand-In No. 1 #
+The first missing lexeme is the left parenthesis, `(` or `Token.LeftParen`.
+
+
+
 Output from #4:
 
 	int

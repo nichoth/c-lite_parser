@@ -86,6 +86,11 @@ public class Lexer {
             case '+': ch = nextChar();
                 return Token.plusTok;
 
+            // student work here
+            case '(':
+                ch = nextChar();
+                return Token.leftParenTok;
+
                 // - * ( ) { } ; ,  student exercise
                 
             case '&': check('&'); return Token.andTok;

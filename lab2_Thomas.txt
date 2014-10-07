@@ -1,0 +1,20 @@
+# 1 - Complete List of Lexemes for Clite #
+
+Bool, Char, Else, False, Float,
+If, Int, Main, True, While,
+Eof, LeftBrace, RightBrace, LeftBracket, RightBracket,
+LeftParen, RightParen, Semicolon, Comma, Assign,
+Equals, Less, LessEqual, Greater, GreaterEqual,
+Not, NotEqual, Plus, Minus, Multiply,
+Divide, And, Or, Identifier, IntLiteral,
+FloatLiteral, CharLiteral
+
+# 2 - List of Tokens for factorial.cpp #
+LeftParen, RightParen, Equals, Semicolon, Int, Multiply, While, Plus
+
+# 3 - The complete list of lexemes for which code must be added to the lexer module along with the file name and the line number where code must be added. #
+
+Lexer.java, line 89: LeftBrace, RightBrace, LeftParen, RightParen, Semicolon, Comma, Minus, Multiply
+
+Lexer.java, line 131
+Less, Greater, Not

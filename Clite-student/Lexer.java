@@ -87,11 +87,40 @@ public class Lexer {
                 return Token.plusTok;
 
             // student work here
+            // - * ( ) { } ; ,  student exercise
             case '(':
                 ch = nextChar();
                 return Token.leftParenTok;
 
-                // - * ( ) { } ; ,  student exercise
+            case ')':
+                ch = nextChar();
+                return Token.rightParenTok;
+
+            case '{':
+                ch = nextChar();
+                return Token.rightBraceTok;
+
+            case '}':
+                ch = nextChar();
+                return Token.leftBraceTok;
+
+            case ';':
+                ch = nextChar();
+                return Token.semicolonTok;
+
+            case ',':
+                ch = nextChar();
+                return Token.commaTok;
+
+            case '-':
+                ch = nextChar();
+                return Token.minusTok;
+
+            case '*':
+                ch = nextChar();
+                return Token.multiplyTok;
+
+            // end student work
                 
             case '&': check('&'); return Token.andTok;
             case '|': check('|'); return Token.orTok;
@@ -99,9 +128,19 @@ public class Lexer {
             case '=':
                 return chkOpt('=', Token.assignTok,
                                    Token.eqeqTok);
-                // < > !  student exercise 
+            
+            // < > !  student exercise
+            case '<':
+                return chkOpt('=', Token.ltTok, Token.lteqTok);
 
-            default:  error("Illegal character " + ch); 
+            case '>':
+                return chkOpt('=', Token.gtTok, Token.gteqTok);
+
+            case '!':
+                return chkOpt('=', Token.notTok, Token.noteqTok);
+            // end student part
+
+            default:  error("Illegal character " + ch);
             } // switch
         } while (true);
     } // next
@@ -112,18 +151,26 @@ public class Lexer {
     }
   
     private boolean isDigit(char c) {
-        return false;  // student exercise
+        // student exercise
+        return digits.contains(Character.toString(c));
     }
 
     private void check(char c) {
         ch = nextChar();
-        if (ch != c) 
+        if (ch != c)
             error("Illegal character, expecting " + c);
         ch = nextChar();
     }
 
+    // student exercise
     private Token chkOpt(char c, Token one, Token two) {
-        return null;  // student exercise
+        // return tok 1 or tok 2
+        ch = nextChar();
+        if (ch != c) {
+            return one;
+        } else {
+            return two;
+        }
     }
 
     private String concat(String set) {

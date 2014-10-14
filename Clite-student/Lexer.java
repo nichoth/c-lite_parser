@@ -95,14 +95,22 @@ public class Lexer {
             case ')':
                 ch = nextChar();
                 return Token.rightParenTok;
+                
+            case '[':
+                ch = nextChar();
+                return Token.leftBracketTok;
+                
+            case ']':
+                ch = nextChar();
+                return Token.rightBracketTok;
 
             case '{':
                 ch = nextChar();
-                return Token.rightBraceTok;
+                return Token.leftBraceTok;
 
             case '}':
                 ch = nextChar();
-                return Token.leftBraceTok;
+                return Token.rightBraceTok;
 
             case ';':
                 ch = nextChar();
@@ -169,6 +177,7 @@ public class Lexer {
         if (ch != c) {
             return one;
         } else {
+        	ch = nextChar();
             return two;
         }
     }

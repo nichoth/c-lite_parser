@@ -1,0 +1,10 @@
+Nick Thomas
+PLD Lab 3
+Fall 2014
+
+# Scanning a minimum Clite program #
+
+Complete
+
+# Lexing the unambiguous single-character tokens #
+

@@ -19,7 +19,7 @@
 /
 &&
 ||
-<<EOF>>
+Identifier	EOF
 bool
 char
 else

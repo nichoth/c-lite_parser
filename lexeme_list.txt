@@ -1,1 +1,1 @@
-[ ] ( ) { } ;  = == < <= > >= ! != + - * / && || <<EOF>> bool char else false float if int main true while
+[ ] ( ) { } ;  = == < <= > >= ! != + - * / && || EOF bool char else false float if int main true while

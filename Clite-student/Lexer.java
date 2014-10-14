@@ -106,11 +106,11 @@ public class Lexer {
 
             case '{':
                 ch = nextChar();
-                return Token.rightBraceTok;
+                return Token.leftBraceTok;
 
             case '}':
                 ch = nextChar();
-                return Token.leftBraceTok;
+                return Token.rightBraceTok;
 
             case ';':
                 ch = nextChar();

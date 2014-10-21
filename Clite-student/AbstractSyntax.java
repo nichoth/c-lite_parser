@@ -12,6 +12,10 @@ class Program {
         decpart = d;
         body = b;
     }
+    
+    public void display() {
+    	System.out.println("Display AST");
+    }
 
 }
 
@@ -71,7 +75,6 @@ class Assignment extends Statement {
         target = t;
         source = e;
     }
-
 }
 
 class Conditional extends Statement {

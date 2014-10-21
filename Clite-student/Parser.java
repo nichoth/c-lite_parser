@@ -41,10 +41,12 @@ public class Parser {
                           TokenType.LeftParen, TokenType.RightParen};
         for (int i=0; i<header.length; i++)   // bypass "int main ( )"
             match(header[i]);
+        
         match(TokenType.LeftBrace);
         // student exercise
         match(TokenType.RightBrace);
-        return null;  // student exercise
+        
+        return new Program(null, null);
     }
   
     private Declarations declarations () {
@@ -80,7 +82,10 @@ public class Parser {
   
     private Assignment assignment () {
         // Assignment --> Identifier = Expression ;
-        return null;  // student exercise
+        // student exercise
+    	Variable v = new Variable(match(TokenType.Identifier));
+    	Expression e = expression();
+    	return new Assignment(v,e);
     }
   
     private Conditional ifStatement () {
@@ -95,12 +100,14 @@ public class Parser {
 
     private Expression expression () {
         // Expression --> Conjunction { || Conjunction }
-        return null;  // student exercise
+//        return null;  // student exercise
+    	return conjunction();
     }
   
     private Expression conjunction () {
         // Conjunction --> Equality { && Equality }
-        return null;  // student exercise
+//        return null;  // student exercise
+    	return equality();
     }
   
     private Expression equality () {
@@ -155,7 +162,7 @@ public class Parser {
             e = literal();
         } else if (token.type().equals(TokenType.LeftParen)) {
             token = lexer.next();
-            e = expression();       
+            e = expression();
             match(TokenType.RightParen);
         } else if (isType( )) {
             Operator op = new Operator(match(token.type()));

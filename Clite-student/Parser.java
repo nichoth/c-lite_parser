@@ -84,7 +84,9 @@ public class Parser {
         // Assignment --> Identifier = Expression ;
         // student exercise
     	Variable v = new Variable(match(TokenType.Identifier));
+    	match(TokenType.Assign);
     	Expression e = expression();
+    	match(TokenType.Semicolon);
     	return new Assignment(v,e);
     }
   
@@ -100,8 +102,9 @@ public class Parser {
 
     private Expression expression () {
         // Expression --> Conjunction { || Conjunction }
-//        return null;  // student exercise
-    	return conjunction();
+    	// student exercise
+    	Expression c = conjunction();
+    	return c;
     }
   
     private Expression conjunction () {

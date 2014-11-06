@@ -1,9 +1,0 @@
-Nick Thomas
-PLD Lab 4
-Fall 2014
-http://ada.evergreen.edu/cnc/pld14f/project/lab4-parserAssign.html
-
-# Implement the Parser #
-I added stub methods required to parse the most minimal cpp program without errors.
-
-The code for assigment AST nodes is in place, but not all of its dependent methods exist.

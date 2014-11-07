@@ -32,7 +32,7 @@ class Declaration {
 
     Declaration (Variable var, Type type) {
         v = var; t = type;
-    } // declaration */
+    } // declaration
 
 }
 

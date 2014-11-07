@@ -44,19 +44,29 @@ public class Parser {
         
         match(TokenType.LeftBrace);
         // student exercise
+        
+        Declarations d = declarations();
+        Block b = statements();
+        
         match(TokenType.RightBrace);
         
-        return new Program(null, null);
+        return new Program(d, b);
     }
   
+    // braces = one or more?
     private Declarations declarations () {
         // Declarations --> { Declaration }
-        return null;  // student exercise
+    	return new Declarations();
+//        return null;  // student exercise
     }
-  
+    
+    
+    // what is this supposed to so?
+    // void = typo?
     private void declaration (Declarations ds) {
         // Declaration  --> Type Identifier { , Identifier } ;
         // student exercise
+    	
     }
   
     private Type type () {
@@ -68,8 +78,9 @@ public class Parser {
   
     private Statement statement() {
         // Statement --> ; | Block | Assignment | IfStatement | WhileStatement
-        Statement s = new Skip();
+//        Statement s = new Skip();
         // student exercise
+        Statement s = assignment();
         return s;
     }
   
@@ -77,7 +88,9 @@ public class Parser {
         // Block --> '{' Statements '}'
         Block b = new Block();
         // student exercise
+        b.members.add( statement() );
         return b;
+//    	return statement();
     }
   
     private Assignment assignment () {
@@ -115,12 +128,14 @@ public class Parser {
   
     private Expression equality () {
         // Equality --> Relation [ EquOp Relation ]
-        return null;  // student exercise
+    	return relation();
+//        return null;  // student exercise
     }
 
     private Expression relation (){
-        // Relation --> Addition [RelOp Addition] 
-        return null;  // student exercise
+        // Relation --> Addition [RelOp Addition]
+    	return addition();
+//        return null;  // student exercise
     }
   
     private Expression addition () {
@@ -178,7 +193,10 @@ public class Parser {
     }
 
     private Value literal( ) {
-        return null;  // student exercise
+    	Value lit = new IntValue( Integer.parseInt(token.value()) );
+		token = lexer.next();
+    	return lit;
+//        return null;  // student exercise
     }
   
 

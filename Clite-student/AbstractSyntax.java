@@ -14,7 +14,10 @@ class Program {
     }
     
     public void display() {
-    	System.out.println("Display AST");
+    	int indent = 0;
+    	System.out.println("Display Program");
+    	// display decs here
+    	body.display(++indent);
     }
 
 }
@@ -53,7 +56,9 @@ class Type {
 
 abstract class Statement {
     // Statement = Skip | Block | Assignment | Conditional | Loop
-
+	public void display(int indent) {
+		System.out.println("Display Statement");
+	}
 }
 
 class Skip extends Statement {
@@ -63,6 +68,14 @@ class Block extends Statement {
     // Block = Statement*
     //         (a Vector of members)
     public ArrayList<Statement> members = new ArrayList<Statement>();
+    
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("block display");
+    	for (Statement stat : members) {
+    		stat.display(++indent);
+    	}
+    }
 
 }
 
@@ -75,6 +88,19 @@ class Assignment extends Statement {
         target = t;
         source = e;
     }
+    
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("display assignment");
+    }
+}
+
+class Util {
+	public static void printIndent(int indent) {
+		for (int i=0; i<indent; i++) {
+			System.out.print("\t");
+		}
+	}
 }
 
 class Conditional extends Statement {

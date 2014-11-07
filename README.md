@@ -1,12 +1,12 @@
 # PLD Lab #
 
-## Lab 4 ##
+## Lab 5 ##
 
-We can parse a program with an assignment statement.
+Implement the display methods.
 
 ### Run the test program ###
 
 	$ cd Clite-student
 	$ java Parser ../parser-test/prog2.cpp
 
-It should print `Display AST` (we haven't implemented the `display` method.).
+Indentation is implemented by passing a primitive int as a parameter to `display()`. The int is the indentation level. Terminals print at the given indentation level, non-terminals call their children with `indent+1`.

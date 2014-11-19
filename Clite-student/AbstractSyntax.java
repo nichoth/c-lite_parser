@@ -15,7 +15,7 @@ class Program {
     
     public void display() {
     	int indent = 0;
-    	System.out.println("Display Program");
+    	System.out.println("Program:");
     	decpart.display(indent+1);
     	body.display(indent+1);
     }
@@ -27,11 +27,14 @@ class Declarations extends ArrayList<Declaration> {
     // (a list of declarations d1, d2, ..., dn)
 	public void display(int indent) {
 		Util.printIndent(indent);
-		System.out.println("Display in Declarations");
+		System.out.println("Declarations: ");
+		Util.printIndent(indent+1);
+		System.out.print("Declarations = { ");
 		Iterator<Declaration> iter = this.iterator();
 		while ( iter.hasNext() ) {
 			iter.next().display(indent+1);
 		}
+		System.out.print(" }");
 		System.out.println();
 	}
 }
@@ -46,8 +49,7 @@ class Declaration {
     } // declaration
 
 	public void display(int indent) {
-		Util.printIndent(indent);
-		System.out.print("display in declaration");
+		System.out.print("<" + v + ", " + t + "> ");
 	}
 
 }
@@ -83,12 +85,11 @@ class Block extends Statement {
     public ArrayList<Statement> members = new ArrayList<Statement>();
     public void display(int indent) {
     	Util.printIndent(indent);
-    	System.out.println("block display");
-    	for (Statement stat : members) {
-    		stat.display(indent+1);
+    	System.out.println("Block:");
+    	for (Statement statement : members) {
+    		statement.display(indent+1);
     	}
     }
-
 }
 
 class Assignment extends Statement {
@@ -102,15 +103,17 @@ class Assignment extends Statement {
     }
     
     public void display(int indent) {
-    	target.display(indent);
-    	source.display(indent);
+    	Util.printIndent(indent);
+    	System.out.println("Assignment: ");
+    	target.display(indent+1);
+    	source.display(indent+1);
     }
 }
 
 class Util {
 	public static void printIndent(int indent) {
 		for (int i=0; i<indent; i++) {
-			System.out.print("\t");
+			System.out.print("    ");
 		}
 	}
 }
@@ -163,7 +166,7 @@ class Variable extends Expression {
     
     public void display(int indent) {
     	Util.printIndent(indent);
-    	System.out.println("display in variable");
+    	System.out.println("Variable: " + this);
     }
     
     public int hashCode ( ) { return id.hashCode( ); }
@@ -178,7 +181,7 @@ abstract class Value extends Expression {
     
     public void display(int indent) {
     	Util.printIndent(indent);
-    	System.out.println("display in `Value`");
+    	System.out.println(this.type.toString() + ": " + this);
     }
 
     int intValue ( ) {
@@ -306,8 +309,11 @@ class Binary extends Expression {
 
 	@Override
 	void display(int indent) {
-		// TODO Auto-generated method stub
-		
+		Util.printIndent(indent);
+		System.out.println("Binary:");
+		op.display(indent+1);
+		term1.display(indent+1);
+		term2.display(indent+1);
 	}
 
 }
@@ -406,7 +412,12 @@ class Operator {
     
     Operator (String s) { val = s; }
 
-    public String toString( ) { return val; }
+    public void display(int indent) {
+		Util.printIndent(indent);
+		System.out.println("Operator: " + this);
+	}
+
+	public String toString( ) { return val; }
     public boolean equals(Object obj) { return val.equals(obj); }
     
     boolean BooleanOp ( ) { return val.equals(AND) || val.equals(OR); }

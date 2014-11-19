@@ -16,8 +16,8 @@ class Program {
     public void display() {
     	int indent = 0;
     	System.out.println("Display Program");
-    	// display decs here
-    	body.display(++indent);
+    	decpart.display(indent+1);
+    	body.display(indent+1);
     }
 
 }
@@ -26,11 +26,13 @@ class Declarations extends ArrayList<Declaration> {
     // Declarations = Declaration*
     // (a list of declarations d1, d2, ..., dn)
 	public void display(int indent) {
+		Util.printIndent(indent);
 		System.out.println("Display in Declarations");
 		Iterator<Declaration> iter = this.iterator();
 		while ( iter.hasNext() ) {
-			iter.next().display(++indent);
+			iter.next().display(indent+1);
 		}
+		System.out.println();
 	}
 }
 
@@ -44,6 +46,7 @@ class Declaration {
     } // declaration
 
 	public void display(int indent) {
+		Util.printIndent(indent);
 		System.out.print("display in declaration");
 	}
 
@@ -78,12 +81,11 @@ class Block extends Statement {
     // Block = Statement*
     //         (a Vector of members)
     public ArrayList<Statement> members = new ArrayList<Statement>();
-    
     public void display(int indent) {
     	Util.printIndent(indent);
     	System.out.println("block display");
     	for (Statement stat : members) {
-    		stat.display(++indent);
+    		stat.display(indent+1);
     	}
     }
 
@@ -100,8 +102,8 @@ class Assignment extends Statement {
     }
     
     public void display(int indent) {
-    	Util.printIndent(indent);
-    	System.out.println("display assignment");
+    	target.display(indent);
+    	source.display(indent);
     }
 }
 
@@ -141,6 +143,7 @@ class Loop extends Statement {
 }
 
 abstract class Expression {
+	abstract void display(int indent);
     // Expression = Variable | Value | Binary | Unary
 
 }
@@ -158,6 +161,11 @@ class Variable extends Expression {
         return id.equals(s); // case-sensitive identifiers
     }
     
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("display in variable");
+    }
+    
     public int hashCode ( ) { return id.hashCode( ); }
 
 }
@@ -167,6 +175,11 @@ abstract class Value extends Expression {
     //         CharValue | FloatValue
     protected Type type;
     protected boolean undef = true;
+    
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("display in `Value`");
+    }
 
     int intValue ( ) {
         assert false : "should never reach here";
@@ -291,6 +304,12 @@ class Binary extends Expression {
         op = o; term1 = l; term2 = r;
     } // binary
 
+	@Override
+	void display(int indent) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 class Unary extends Expression {
@@ -301,6 +320,12 @@ class Unary extends Expression {
     Unary (Operator o, Expression e) {
         op = o; term = e;
     } // unary
+
+	@Override
+	void display(int indent) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 

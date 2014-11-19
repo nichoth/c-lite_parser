@@ -86,7 +86,6 @@ public class Parser {
   
     private Statement statement() {
         // Statement --> ; | Block | Assignment | IfStatement | WhileStatement
-//        Statement s = new Skip();
         // student exercise
         Statement s = assignment();
         return s;
@@ -94,11 +93,12 @@ public class Parser {
   
     private Block statements () {
         // Block --> '{' Statements '}'
-        Block b = new Block();
         // student exercise
-        b.members.add( statement() );
+        Block b = new Block();
+        while ( !token.type().equals(TokenType.RightBrace) ) {
+        	b.members.add( statement() );
+        }
         return b;
-//    	return statement();
     }
   
     private Assignment assignment () {
@@ -130,20 +130,20 @@ public class Parser {
   
     private Expression conjunction () {
         // Conjunction --> Equality { && Equality }
-//        return null;  // student exercise
+    	// student exercise
     	return equality();
     }
   
     private Expression equality () {
         // Equality --> Relation [ EquOp Relation ]
+    	// student exercise
     	return relation();
-//        return null;  // student exercise
     }
 
     private Expression relation (){
         // Relation --> Addition [RelOp Addition]
+    	// student exercise
     	return addition();
-//        return null;  // student exercise
     }
   
     private Expression addition () {

@@ -22,7 +22,7 @@ public class Parser {
             error(t);
         return value;
     }
-  
+
     private void error(TokenType tok) {
         System.err.println("Syntax error: expecting: " + tok 
                            + "; saw: " + token);
@@ -54,26 +54,34 @@ public class Parser {
     }
   
     // braces = one or more?
-    private Declarations declarations () {
+    private Declarations declarations() {
         // Declarations --> { Declaration }
-    	return new Declarations();
-//        return null;  // student exercise
+    	Declarations ds = new Declarations();
+    	declaration(ds);
+    	return ds;
     }
     
     
-    // what is this supposed to so?
-    // void = typo?
     private void declaration (Declarations ds) {
         // Declaration  --> Type Identifier { , Identifier } ;
         // student exercise
-    	
+
+    	// while ( token.type().equals( TokenType.Identifier ) )
+    	//   match( comma )
+    	//   ds.add( new Declaration(var, type) )
+    	Type t = type();
+    	Variable v = new Variable(match(TokenType.Identifier));
+    	Declaration d = new Declaration(v, t);
+    	ds.add(d);
+    	match(TokenType.Semicolon);
     }
   
     private Type type () {
-        // Type  -->  int | bool | float | char 
-        Type t = null;
+        // Type  -->  int | bool | float | char
         // student exercise
-        return t;          
+    	
+    	match(TokenType.Int);
+        return Type.INT;
     }
   
     private Statement statement() {
@@ -193,10 +201,10 @@ public class Parser {
     }
 
     private Value literal( ) {
+    	// student exercise
     	Value lit = new IntValue( Integer.parseInt(token.value()) );
 		token = lexer.next();
     	return lit;
-//        return null;  // student exercise
     }
   
 

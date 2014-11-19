@@ -25,7 +25,13 @@ class Program {
 class Declarations extends ArrayList<Declaration> {
     // Declarations = Declaration*
     // (a list of declarations d1, d2, ..., dn)
-
+	public void display(int indent) {
+		System.out.println("Display in Declarations");
+		Iterator<Declaration> iter = this.iterator();
+		while ( iter.hasNext() ) {
+			iter.next().display(++indent);
+		}
+	}
 }
 
 class Declaration {
@@ -36,6 +42,10 @@ class Declaration {
     Declaration (Variable var, Type type) {
         v = var; t = type;
     } // declaration
+
+	public void display(int indent) {
+		System.out.print("display in declaration");
+	}
 
 }
 

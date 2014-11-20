@@ -181,7 +181,7 @@ abstract class Value extends Expression {
     
     public void display(int indent) {
     	Util.printIndent(indent);
-    	System.out.println(this.type.toString() + ": " + this);
+    	System.out.println(this.type.toString()+"Value" + ": " + this);
     }
 
     int intValue ( ) {

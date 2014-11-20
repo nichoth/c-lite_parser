@@ -124,26 +124,49 @@ public class Parser {
     private Expression expression () {
         // Expression --> Conjunction { || Conjunction }
     	// student exercise
-    	Expression c = conjunction();
-    	return c;
+    	Expression e = conjunction();
+        while ( token.type().equals(TokenType.Or) ) {
+            Operator op = new Operator( match(token.type()) );
+            Expression term2 = conjunction();
+            e = new Binary(op, e, term2);
+        }
+        return e;
     }
   
     private Expression conjunction () {
         // Conjunction --> Equality { && Equality }
     	// student exercise
-    	return equality();
+    	Expression e = equality();
+        while ( token.type().equals(TokenType.And) ) {
+            Operator op = new Operator( match(token.type()) );
+            Expression term2 = equality();
+            e = new Binary(op, e, term2);
+        }
+        return e;
     }
   
     private Expression equality () {
         // Equality --> Relation [ EquOp Relation ]
     	// student exercise
-    	return relation();
+    	Expression e = relation();
+        if ( isEqualityOp() ) {
+            Operator op = new Operator( match(token.type()) );
+            Expression term2 = relation();
+            e = new Binary(op, e, term2);
+        }
+        return e;
     }
 
     private Expression relation (){
         // Relation --> Addition [RelOp Addition]
     	// student exercise
-    	return addition();
+    	Expression e = addition();
+        if ( isRelationalOp() ) {
+            Operator op = new Operator( match(token.type()) );
+            Expression term2 = addition();
+            e = new Binary(op, e, term2);
+        }
+        return e;
     }
   
     private Expression addition () {

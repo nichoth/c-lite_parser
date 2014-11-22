@@ -15,7 +15,7 @@ class Program {
     
     public void display() {
     	int indent = 0;
-    	System.out.println("Program:");
+    	System.out.println("Program (abstract syntax):");
     	decpart.display(indent+1);
     	body.display(indent+1);
     }
@@ -113,7 +113,7 @@ class Assignment extends Statement {
 class Util {
 	public static void printIndent(int indent) {
 		for (int i=0; i<indent; i++) {
-			System.out.print("    ");
+			System.out.print("  ");
 		}
 	}
 }
@@ -141,6 +141,13 @@ class Loop extends Statement {
 
     Loop (Expression t, Statement b) {
         test = t; body = b;
+    }
+    
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("Loop: ");
+    	test.display(indent+1);
+    	body.display(indent+1);
     }
     
 }

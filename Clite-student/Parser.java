@@ -92,10 +92,24 @@ public class Parser {
     private Statement statement() {
         // Statement --> ; | Block | Assignment | IfStatement | WhileStatement
         // student exercise
-        Statement s = assignment();
-        return s;
+    	if ( token.type().equals(TokenType.Semicolon) ) {
+    		return new Skip();
+    	} else if ( token.type().equals(TokenType.LeftBrace) ) {
+    		match(TokenType.LeftBrace);
+    		Block b = statements();
+    		match( TokenType.RightBrace );
+    		return b;
+    	} else if ( token.type().equals(TokenType.Identifier) ) {
+    		return assignment();
+    	} else if ( token.type().equals(TokenType.If) ) {
+    		return ifStatement();
+    	} else if ( token.type().equals(TokenType.While) ) {
+    		return whileStatement();
+    	} else {
+    		throw new Error("in Parser.statement");
+    	}
     }
-  
+
     private Block statements () {
         // Block --> '{' Statements '}'
         // student exercise
@@ -105,7 +119,7 @@ public class Parser {
         }
         return b;
     }
-  
+
     private Assignment assignment () {
         // Assignment --> Identifier = Expression ;
         // student exercise
@@ -123,7 +137,13 @@ public class Parser {
   
     private Loop whileStatement () {
         // WhileStatement --> while ( Expression ) Statement
-        return null;  // student exercise
+        // student exercise
+    	match(TokenType.While);
+    	match(TokenType.LeftParen);
+    	Expression e = expression();
+    	match(TokenType.RightParen);
+    	Statement s = statement();
+    	return new Loop(e, s);
     }
 
     private Expression expression () {
@@ -280,6 +300,14 @@ public class Parser {
     private boolean isBooleanLiteral( ) {
         return token.type().equals(TokenType.True) ||
             token.type().equals(TokenType.False);
+    }
+    
+    private boolean isStatement() {
+        return token.type().equals(TokenType.Semicolon) ||
+               token.type().equals(TokenType.LeftBrace) || 
+               token.type().equals(TokenType.Identifier) ||
+               token.type().equals(TokenType.If) ||
+               token.type().equals(TokenType.While);
     }
     
     public static void main(String args[]) {

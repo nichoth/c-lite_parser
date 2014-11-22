@@ -1,6 +1,6 @@
 // test expressions
 int main() {
-    int i;
+    int i, j;
     i = 3;
     i = 3 + 1;
     i = 3 - 1;

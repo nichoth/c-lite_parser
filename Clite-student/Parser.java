@@ -53,11 +53,13 @@ public class Parser {
         return new Program(d, b);
     }
   
-    // braces = one or more?
+    // braces = one or more
     private Declarations declarations() {
         // Declarations --> { Declaration }
     	Declarations ds = new Declarations();
-    	declaration(ds);
+    	while ( isType() ) {
+    		declaration(ds);
+    	}
     	return ds;
     }
     
@@ -66,13 +68,16 @@ public class Parser {
         // Declaration  --> Type Identifier { , Identifier } ;
         // student exercise
 
-    	// while ( token.type().equals( TokenType.Identifier ) )
-    	//   match( comma )
-    	//   ds.add( new Declaration(var, type) )
     	Type t = type();
-    	Variable v = new Variable(match(TokenType.Identifier));
+    	Variable v = new Variable( match(TokenType.Identifier) );
     	Declaration d = new Declaration(v, t);
     	ds.add(d);
+    	while ( !token.type().equals(TokenType.Semicolon) ) {
+        	match(TokenType.Comma);
+        	v = new Variable( match(TokenType.Identifier) );
+        	d = new Declaration(v, t);
+        	ds.add(d);
+    	}
     	match(TokenType.Semicolon);
     }
   

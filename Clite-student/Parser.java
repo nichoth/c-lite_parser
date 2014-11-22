@@ -93,6 +93,7 @@ public class Parser {
         // Statement --> ; | Block | Assignment | IfStatement | WhileStatement
         // student exercise
     	if ( token.type().equals(TokenType.Semicolon) ) {
+    		match(TokenType.Semicolon);
     		return new Skip();
     	} else if ( token.type().equals(TokenType.LeftBrace) ) {
     		match(TokenType.LeftBrace);
@@ -129,10 +130,21 @@ public class Parser {
     	match(TokenType.Semicolon);
     	return new Assignment(v,e);
     }
-  
+
     private Conditional ifStatement () {
         // IfStatement --> if ( Expression ) Statement [ else Statement ]
-        return null;  // student exercise
+        // student exercise
+    	match(TokenType.If);
+    	match(TokenType.LeftParen);
+    	Expression e = expression();
+    	match(TokenType.RightParen);
+    	Statement s = statement();
+    	Statement elStat = null;
+    	if ( token.type().equals(TokenType.Else) ) {
+    		match(TokenType.Else);
+    		elStat = statement();
+    	}
+    	return new Conditional(e, s, elStat);
     }
   
     private Loop whileStatement () {

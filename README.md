@@ -1,6 +1,6 @@
 # PLD Lab #
 
-## Lab 6 - 7 ##
+## Lab 6 ##
 
 Can parse all expressions.
 

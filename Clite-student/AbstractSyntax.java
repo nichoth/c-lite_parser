@@ -77,6 +77,10 @@ abstract class Statement {
 }
 
 class Skip extends Statement {
+	public void display(int indent) {
+		Util.printIndent(indent);
+		System.out.println("Skip");
+	}
 }
 
 class Block extends Statement {
@@ -130,6 +134,14 @@ class Conditional extends Statement {
     
     Conditional (Expression t, Statement tp, Statement ep) {
         test = t; thenbranch = tp; elsebranch = ep;
+    }
+    
+    public void display(int indent) {
+    	Util.printIndent(indent);
+    	System.out.println("Conditional: ");
+    	test.display(indent+1);
+    	thenbranch.display(indent+1);
+    	elsebranch.display(indent+1);
     }
     
 }

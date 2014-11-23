@@ -346,10 +346,11 @@ class Unary extends Expression {
         op = o; term = e;
     } // unary
 
-	@Override
 	void display(int indent) {
-		// TODO Auto-generated method stub
-		
+		Util.printIndent(indent);
+		System.out.println("Unary:");
+		op.display(indent+1);
+		term.display(indent+1);
 	}
 
 }

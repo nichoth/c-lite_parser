@@ -1,5 +1,13 @@
 // StaticTypeCheck.java
 
+/**
+ * See page 137.
+ * Validation = a collection of functions that represent rules like "all 
+ * declared variables have unique names." 
+ * 
+ * Relies on a *type map* -- binds each declared var name to its type.
+ */
+
 import java.util.*;
 
 // Static type checking for Clite is defined by the functions 
@@ -63,7 +71,8 @@ public class StaticTypeCheck {
         }
         throw new IllegalArgumentException("should never reach here");
     } 
-
+    
+    // see page 141
     public static void V (Expression e, TypeMap tm) {
         if (e instanceof Value) 
             return;
@@ -92,10 +101,31 @@ public class StaticTypeCheck {
                 throw new IllegalArgumentException("should never reach here");
             return;
         }
+        
         // student exercise
+        if (e instanceof Unary) {
+        	Unary u = (Unary) e;
+        	Type t = typeOf(u.term, tm);
+        	V (u.term, tm);
+        	if ( u.op.NotOp() ) {
+        		check( t != Type.BOOL, "type error for " + u.op);
+        	} else if ( u.op.NegateOp() ) {
+        		check( t == Type.INT || t == Type.FLOAT, "type error for " + 
+        				u.op );
+        	} else if ( u.op.floatOp() || u.op.charOp() ) {
+        		check( t == Type.INT, "type error for " + u.op );
+        	} else if ( u.op.intOp() ) {
+        		check( t==Type.FLOAT || t==Type.CHAR, "type error for " 
+        				+ u.op );
+        	} else {
+        		throw new IllegalArgumentException("should never reach here");
+        	}
+        	return;
+        }
         throw new IllegalArgumentException("should never reach here");
     }
-
+    
+    // see page 140
     public static void V (Statement s, TypeMap tm) {
         if ( s == null )
             throw new IllegalArgumentException( "AST error: null statement");
@@ -119,19 +149,42 @@ public class StaticTypeCheck {
                            , "mixed mode assignment to " + a.target);
             }
             return;
-        } 
+        }
+        
         // student exercise
+        if ( s instanceof Conditional) {
+        	Conditional c = (Conditional) s;
+        	Type t = typeOf(c.test, tm);
+        	V (c.test, tm);
+        	check( t==Type.BOOL, "type error for " + c.test );
+        	V (c.thenbranch, tm);
+        	V (c.elsebranch, tm);
+        	return;
+        }
+        if (s instanceof Loop) {
+        	Loop l = (Loop) s;
+        	V (l.test, tm);
+        	check( typeOf(l.test, tm)==Type.BOOL, "type error for " + l.test);
+        	V (l.body, tm);
+        	return;
+        } if (s instanceof Block) {
+        	Block b = (Block) s;
+        	for (Statement st : b.members) {
+        		V (st, tm);
+        	}
+        	return;
+        }
         throw new IllegalArgumentException("should never reach here");
     }
 
     public static void main(String args[]) {
         Parser parser  = new Parser(new Lexer(args[0]));
         Program prog = parser.program();
-        // prog.display();           // student exercise
+        prog.display();           // student exercise
         System.out.println("\nBegin type checking...");
         System.out.println("Type map:");
         TypeMap map = typing(prog.decpart);
-        // map.display();   // student exercise
+        map.display();   // student exercise
         V(prog);
     } //main
 
